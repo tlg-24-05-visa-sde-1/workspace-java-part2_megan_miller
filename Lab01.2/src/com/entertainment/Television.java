@@ -48,28 +48,46 @@ public class Television {
         this.volume = volume;
     }
 
-    public int hashCode(){
-        // This is a poor hash function, because it easily yields "hash collisions"
-        //return getBrand().length() + getVolume();
-
-        return Objects.hash(getBrand(), getVolume()); // minimizes the probability of hash code
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj){
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()){
+            return false;
+        }
+        Television other = (Television) obj;
+        return this.getVolume() == other.getVolume() &&
+                Objects.equals(this.getBrand(), other.getBrand());
     }
 
     @Override
-    public boolean equals(Object obj){
-        boolean result = false;
-
-        // check that 'obj' is really referring to a Television object
-        if(obj instanceof Television){
-            // downcast 'obj' to more specific reference type Television
-            Television other = (Television) obj;
-
-            // do checks: business equality is defined as brand, volume
-            result = Objects.equals(this.getBrand(), other.getBrand()) &&  // null-safe check
-                    this.getVolume() == other.getVolume();                 // primitives can't be null
-        }
-        return result;
+    public int hashCode() {
+        return Objects.hash(getBrand(), getVolume());
     }
+
+    //    public int hashCode(){
+//        // This is a poor hash function, because it easily yields "hash collisions"
+//        //return getBrand().length() + getVolume();
+//
+//        return Objects.hash(getBrand(), getVolume()); // minimizes the probability of hash code
+//    }
+//
+//    @Override
+//    public boolean equals(Object obj){
+//        boolean result = false;
+//
+//        // check that 'obj' is really referring to a Television object
+//        if(obj instanceof Television){
+//            // downcast 'obj' to more specific reference type Television
+//            Television other = (Television) obj;
+//
+//            // do checks: business equality is defined as brand, volume
+//            result = Objects.equals(this.getBrand(), other.getBrand()) &&  // null-safe check
+//                    this.getVolume() == other.getVolume();                 // primitives can't be null
+//        }
+//        return result;
+//    }
 
     @Override
     public String toString() {
