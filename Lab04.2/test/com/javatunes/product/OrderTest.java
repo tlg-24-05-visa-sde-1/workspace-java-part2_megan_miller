@@ -19,15 +19,15 @@ public class OrderTest {
 
     @Before
     public void init() {
-        productCart = new ShoppingCart<Product>();
+        productCart = new ShoppingCart<Product>();  // Shopping cart for Product, can be MusicItem or MediaPlayer, T is Product
         productCart.addItem(new MusicItem("CD-501"));
         productCart.addItem(new MediaPlayer("MP3-LP150"));
 
-        musicCart = new ShoppingCart<MusicItem>();
+        musicCart = new ShoppingCart<MusicItem>();  // Shopping cart of only MusicItem, T is MusicItem
         musicCart.addItem(new MusicItem("CD-521"));
         musicCart.addItem(new MusicItem("CD-514"));
 
-        mediaCart = new ShoppingCart<MediaPlayer>();
+        mediaCart = new ShoppingCart<MediaPlayer>(); // Shopping cart of only MediaPlayer, T is MediaPlayer
         mediaCart.addItem(new MediaPlayer("AAC-PL233"));
     }
 
@@ -40,6 +40,14 @@ public class OrderTest {
      */
     @Test
     public void testProcessCart() {
+        Order order1 = new Order("order-1");
+        order1.processCart(productCart);
+
+        Order order2 = new Order("order-2");
+        order2.processCart(musicCart);
+
+        Order order3 = new Order("order-3");
+        order3.processCart(mediaCart);
 
     }
 }
