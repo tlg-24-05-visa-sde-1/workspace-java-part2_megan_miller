@@ -137,6 +137,7 @@ public class InMemoryCatalog implements Catalog {
      */
     public Collection<MusicItem> findSelfTitled(){
         for(MusicItem item : catalogData){
+            return
 
         }
     }

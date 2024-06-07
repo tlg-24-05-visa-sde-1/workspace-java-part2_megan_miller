@@ -11,33 +11,31 @@ package com.javatunes.catalog.test;
 import com.javatunes.catalog.InMemoryCatalog;
 import com.javatunes.catalog.MusicCategory;
 import com.javatunes.catalog.MusicItem;
+import org.junit.Before;
+import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
-class InMemoryCatalogTest {
+import static org.junit.Assert.assertEquals;
 
-    /*
-     * One by one, complete each test method below, and then "activate" it by
-     * uncommenting the call to that method in main().
-     *
-     * Once you see that the test method verifies the corresponding business method
-     * works correctly, you can comment out that call in main() and proceed to the next one.
-     */
-    public static void main(String[] args) {
-        testFindById();
-        testFindByKeyword();
-        testFindByCategory();
-        // testSize();
-        // testGetAll();
-        testCheapRock();
+public class InMemoryCatalogTest {
+    private InMemoryCatalog catalog;
 
+   @Before
+   public void setUp() {
+       catalog = new InMemoryCatalog();
+   }
+
+    @Test
+    public void findCheapRock_returnsCheapRock_isValid() {
+       Collection<MusicItem> classicRockItems =catalog.findByCategory(MusicCategory.CLASSIC_ROCK);
+       assertEquals(1, classicRockItems.size());
     }
 
-    private static void testCheapRock() {
-        InMemoryCatalog catalog = new InMemoryCatalog();
+    @Test
+    public void findCategory
 
-    }
+
 
     private static void testFindById() {
         InMemoryCatalog catalog = new InMemoryCatalog();
@@ -55,12 +53,7 @@ class InMemoryCatalogTest {
         dump(keywordItems);
     }
 
-    private static void testFindByCategory() {
-        InMemoryCatalog catalog = new InMemoryCatalog();
 
-        Collection<MusicItem> popItems = catalog.findByCategory(MusicCategory.POP);
-        dump(popItems);
-}
 
     private static void testSize() {
         InMemoryCatalog catalog = new InMemoryCatalog();
