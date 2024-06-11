@@ -1,10 +1,14 @@
 package com.javatunes.personnel;
 
 import static org.junit.Assert.*;
+
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
+import com.javatunes.personnel.SalariedEmployee;
+import com.javatunes.personnel.HourlyEmployee;
 
 public class EmployeeFactoryTest {
     private Map<String,String> seMap;
@@ -50,25 +54,50 @@ public class EmployeeFactoryTest {
      * to check an object's type, you can use instanceof or check its Class object (preferred):
      * assertEquals(SalariedEmployee.class, emp.getClass())
      */
+
     @Test
-    public void testCreateEmployeeSalaried() {
-        // TODO
+    public void createEmployee_shouldReturnSalariedEmployeeWithAllPropertiesSet_typeSE() {
+        Employee emp = EmployeeFactory.createEmployee(seMap);
+
+        // verify that "emp" really is a reference to a SalariedEmployee object// instanceOf
+        assertEquals(SalariedEmployee.class, emp.getClass());  // EXACT type match
+
+        verifyCommonProperties(emp);
+
+        // downcast 'emp' to more specific reference type SalariedEmployee
+        // this is because we need to call SalariedEmployee-specific method "getSalary()".
+        SalariedEmployee semp = (SalariedEmployee) emp;
+        assertEquals(50_000.0, semp.getSalary(), .001);
     }
 
-    /**
-     * TASK: verify that passing heMap into your factory returns a HourlyEmployee, with all properties set.
-     */
-    @Test
-    public void testCreateEmployeeHourly() {
-        // TODO
+    private static void verifyCommonProperties(Employee emp) {
+        assertEquals("Jackie", emp.getName());
+        assertEquals(Date.valueOf("1990-08-24"), emp.getHireDate());
     }
 
-    /**
-     * TASK: verify that passing a map with an invalid "type" value results in IllegalArgumentException.
-     * The only valid values for "type" are "HE" or "SE".
-     */
+    // TASK: verify that passing heMap into your factory returns a HourlyEmployee, with all properties set.
     @Test
-    public void testCreateEmployeeInvalidTypeThrowsIllegalArgumentException() {
-        // TODO
+    public void createEmployee_shouldReturnHourlyEmployeeWithAllPropertiesSet_typeHE() {
+        Employee emp = EmployeeFactory.createEmployee(heMap);
+
+        // verify that "emp" really is a reference to a HourlyEmployee object
+        assertEquals(HourlyEmployee.class, emp.getClass());  // EXACT type match
+
+        verifyCommonProperties(emp);
+
+        // downcast 'emp' to more specific reference type HourlyEmployee
+        // this is because we need to call HourlyEmployee-specific methods "getRate()" / "getHours()".
+        HourlyEmployee hemp = (HourlyEmployee) emp;
+        assertEquals(50.0, hemp.getRate(), .001);
+        assertEquals(40.0, hemp.getHours(), .001);
+    }
+
+    // Verify that passing a map with invalid "type" value results in
+    // IllegalArgumentException. The only valid values for "type are "HE" and "SE"
+    @Test(expected = IllegalArgumentException.class)
+    public void createEmployee_shouldThrowIllegalArgumentException_whenInvalidType() {
+        seMap.put("type", "INVALID-TYPE");
+
+        EmployeeFactory.createEmployee(seMap);  // trigger the exception
     }
 }
